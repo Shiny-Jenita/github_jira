@@ -25,12 +25,10 @@ jobs:
 
       - name: Update Jira Issue
         run: |
-          ISSUE_KEY=$(echo "${{ github.event.pull_request.title }}" | grep -oE '[A-Z]+-[0-9]+')
-          echo "Detected Jira issue: $KAN-3"
-
+          ISSUE_KEY="KAN-3"
           curl -D- \
             -u ${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} \
             -X POST \
-            --data "{\"body\": \" PR merged to main: ${{ github.event.pull_request.html_url }}\"}" \
+            --data '{"body": "✅ PR merged to main: '${{ github.event.pull_request.html_url }}'"}' \
             -H "Content-Type: application/json" \
-            https://entrans-team-bhtmtecd.atlassian.net/rest/api/3/issue/$KAN-3/comment
+            https://entrans-team-bhtmtecd.atlassian.net/rest/api/3/issue/$ISSUE_KEY/comment
